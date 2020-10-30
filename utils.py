@@ -89,9 +89,9 @@ def edge_normalization(edge_type, edge_index, num_entity, num_relation):
         - edge_norm: (num_edge)
     '''
     one_hot = F.one_hot(edge_type, num_classes = 2 * num_relation).to(torch.float)
-    deg = scatter_add(one_hot, edge_index[0], dim = 0, dim_size = num_entity)
-    index = edge_type + torch.arange(len(edge_index[0])) * (2 * num_relation)
-    edge_norm = 1 / deg[edge_index[0]].view(-1)[index]
+    deg = scatter_add(one_hot, edge_index[1], dim = 0, dim_size = num_entity)
+    index = edge_type + torch.arange(len(edge_index[1])) * (2 * num_relation)
+    edge_norm = 1 / deg[edge_index[1]].view(-1)[index]
 
     return edge_norm
 
